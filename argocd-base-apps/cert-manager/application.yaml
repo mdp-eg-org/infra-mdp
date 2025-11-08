@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   labels:
     app: helm
+    type: base-app
+    env: prod
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
@@ -19,7 +21,6 @@ spec:
             enabled: true
           prometheus:
             enabled: false
-
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: cert-manager
@@ -28,3 +29,27 @@ spec:
       prune: true
     syncOptions:
      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-cluster-issuer
+  namespace: argocd
+  labels:
+    app: helm
+    type: base-app
+    env: prod
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mdp-eg-org/infra-mdp
+    targetRevision: HEAD
+    path: cert-manager/config
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    automated: 
+      prune: true

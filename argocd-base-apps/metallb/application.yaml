@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   labels:
     app: helm
+    type: base-app
+    env: prod
 spec:
   project: default
   syncPolicy:
