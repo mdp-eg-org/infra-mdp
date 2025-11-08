@@ -9,17 +9,20 @@ additionalArguments:
 
 ports:
   web:
-    port: 80
+    port: 8000
     expose:
       default: true
     exposedPort: 80
     protocol: TCP
+    nodePort: 32081
+
   websecure:
-    port: 443
+    port: 8443
     expose:
       default: true
     exposedPort: 443
     protocol: TCP
+    nodePort: 32444
 
 service:
   enabled: true
