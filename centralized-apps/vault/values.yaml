@@ -1,0 +1,39 @@
+global:
+  namespace: vault
+injector:
+  replicas: 3
+  metrics:
+    enabled: true
+server:
+  ingress:
+    enabled: true
+    annotations: 
+      cert-manager.io/cluster-issuer: acme-issuer
+    ingressClassName: "traefik-external"
+    pathType: Prefix
+    hosts:
+      - host: vault.poc.mdplabs.dev
+    tls: 
+      - secretName: vault-tls
+        hosts:
+          - vault.poc.mdplabs.dev
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      config: |
+        ui = true
+        service_registration "kubernetes" {}
+        listener "tcp" {
+          tls_disable = 1
+          address = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+        }
+        storage "raft" {
+          path = "/vault/data"
+        }
+  
+  dataStorage:
+    size: 5Gi
+    storageClass: longhorn

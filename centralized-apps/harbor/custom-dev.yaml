@@ -1,0 +1,63 @@
+expose:
+  ingress:
+    hosts: 
+      core: registry.dev.osirisai.com
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+    className: traefik-external
+  tls:
+    enabled: true
+    secretName: harbor-tls
+
+externalURL: https://registry.dev.osirisai.com
+
+persistence:
+  enabled: true
+  imageChartStorage:
+    type: gcs
+    gcs:
+      bucket: osirisai-registry-dev
+      useWorkloadIdentity: true
+  
+ipFamily:
+  ipv6:
+    enabled: false
+    
+existingSecretAdminPassword: "harbor-admin-secret"
+
+existingSecretSecretKey: "harbor-encrypt-key"
+
+enableMigrateHelmHook: false
+
+cache:
+  enabled: true
+  expireHours: 24
+
+trivy:
+  enabled: false
+  
+database:
+  type: external
+  external:
+    host: "10.40.163.5"
+    port: "5432"
+    username: "dev_harbor"
+    coreDatabase: "dev_harbor"
+    existingSecret: "harbor-db-secret"
+    sslmode: "require"    
+
+registry:
+  serviceAccountName: "harbor-registry"
+  automountServiceAccountToken: true
+  replicas: 2  
+
+portal:
+  replicas: 2
+
+core:
+  replicas: 2
+
+jobservice:
+  replicas: 2
+  jobLoggers:
+    - database
