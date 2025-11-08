@@ -17,6 +17,8 @@ spec:
       values: |
           expose:
             type: nodePort
+            tls:
+              enabled: false
             # type: ingress
             # tls:
             #   secret:
