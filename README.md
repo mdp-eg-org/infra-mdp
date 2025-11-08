@@ -37,8 +37,14 @@
                 - Username: <username>
                 - Password: <TOKEN>
 
-    6. Install the base-app bootstrap application:
+# Install the base-app bootstrap application (cert-manager, longhorn, traefik, longhorn,..):
     ```
     make install-base-app-bootstrap
     ```
-    7. Verify from Argocd UI that all base-apps installed in cluster
+    - Verify from Argocd UI that all base-apps installed in cluster
+
+# Install the centralized-app bootstrap application (vault, harbor):
+    ```
+    make install-centralized-app-bootstrap
+    ```
+    - Verify from Argocd UI that all centralized-apps installed in cluster
