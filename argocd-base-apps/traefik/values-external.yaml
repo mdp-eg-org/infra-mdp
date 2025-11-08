@@ -28,3 +28,4 @@ service:
   type: LoadBalancer
   annotations:
     metallb.universe.tf/address-pool: "external-pool"
+    metallb.universe.tf/loadBalancerIPs: "91.99.125.133"
