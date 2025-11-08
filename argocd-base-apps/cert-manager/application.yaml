@@ -46,7 +46,7 @@ spec:
   source:
     repoURL: https://github.com/mdp-eg-org/infra-mdp
     targetRevision: HEAD
-    path: cert-manager/config
+    path: argocd-base-apps/cert-manager/config
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: cert-manager
