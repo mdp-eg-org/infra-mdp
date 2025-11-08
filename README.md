@@ -1,32 +1,35 @@
-# Create cluster in 3 VMS using scripts install-k3s.sh 
-    1. update script to add 3 node IPs
-    2. run script
-    3. confirm cluster creation by setting context and get nodes
+# 1. Create K3s Cluster on 3 VMs
+    1. Update `install-k3s.sh` with the IPs of your 3 nodes.
+    2. Run the script:
+
+    ```bash
+    ./install-k3s.sh
+    ```
+    3. Verify cluster creation:
     ```
     export KUBECONFIG=<config path>
     kubectl get nodes
     ```
-# Install/Configre Argocd in cluster 
+# Install & Configure ArgoCD
     1. install argocd
     ```
     make install-argocd
     ```
-    2. Confirm running 
+    2. Check that all pods are running:
     ```
     kubectl get pods -n argocd
     ```
-    3. get admin password
+    3. Get the admin password:
     ```
     make get-argocd-password
     ```
-    4. Expose service to login from browser until creating its ingress
+    4. Expose ArgoCD service temporarily for browser access:
     ```
     kubectl port-forward svc/argocd-server -n argocd 2222:80
-    From browser: http://localhost:2222
     ```
-    5. Configure argocd access with repo and cluster
-        - In argocd settings:
-            1. Repositories -> Connect Repo
+        - Access ArgoCD in your browser: http://localhost:2222
+    5. Connect your Git repository in ArgoCD:
+        - Go to Settings → Repositories → Connect Repo
                 - Connection method: https
                 - Type: git
                 - Project: default
@@ -34,7 +37,8 @@
                 - Username: <username>
                 - Password: <TOKEN>
 
-    6. Install bootstrap app
+    6. Install the base-app bootstrap application:
     ```
-    make install-bootstrap
+    make install-base-app-bootstrap
     ```
+    7. Verify from Argocd UI that all base-apps installed in cluster

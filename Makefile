@@ -13,5 +13,5 @@ install-argocd:	## install Argocd cluster wide
 get-argocd-password: ## get the name pod name of argocd-server deployment
 	kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d ;echo
 
-install-bootstrap: ## install Argocd base-apps bootstrap application
+install-base-app-bootstrap: ## install Argocd base-apps bootstrap application
 	kubectl apply -f argocd/base-apps-bootstrap.yaml -n argocd
