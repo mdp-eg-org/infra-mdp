@@ -3,20 +3,29 @@ kind: Application
 metadata:
   name: traefik-internal
   namespace: argocd
+  labels:
+    app: helm
+    type: base-app
+    env: prod
 spec:
   project: default
-  source:
-    repoURL: 'git@github.com:your-org/infra.git'
-    targetRevision: HEAD
-    path: centralized-apps/argocd-apps/traefik-internal
-    helm:
-      valueFiles:
-        - values.yaml
-        - values-internal.yaml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: kube-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    namespace: traefik
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: 'https://github.com/mdp-eg-org/infra-mdp'
+      targetRevision: main
+      ref: values
+    - repoURL: 'https://traefik.github.io/charts'
+      chart: traefik
+      targetRevision: 37.0.0
+      helm:
+        valueFiles:
+        - $values/argocd-base-apps/traefik/values.yaml
+        - $values/argocd-base-apps/traefik/values-internal.yaml
