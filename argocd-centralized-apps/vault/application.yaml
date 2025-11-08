@@ -28,3 +28,9 @@ spec:
       helm:
         valueFiles:
         - $values/argocd-centralized-apps/vault/values.yaml
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: vault-agent-injector-cfg
+      jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
