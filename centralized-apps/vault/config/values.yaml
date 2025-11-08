@@ -36,4 +36,4 @@ server:
   
   dataStorage:
     size: 5Gi
-    storageClass: longhorn
+    storageClass: longhorn-replica2

@@ -1,0 +1,53 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+  labels:
+    app: helm
+    type: centralized-app
+    env: prod
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.goharbor.io'
+    targetRevision: 1.19.0
+    chart: harbor
+    helm:
+      values: |
+          expose:
+            tls:
+              secret:
+                secretName: "harbor-tls"
+              certSource: secret
+            ingress:
+              controller: traefik
+              hosts:
+                core: "harbor.poc.mdplabs.dev"
+              className: traefik-external
+              annotations:
+                cert-manager.io/cluster-issuer: acme-issuer
+          
+          externalURL: "https://harbor.poc.mdplabs.dev"
+          persistence:
+            persistentVolumeClaim:
+              registry:
+                storageClass: "longhorn-replica2"
+              jobservice:
+                jobLog:
+                  storageClass: "longhorn-replica2"
+              database:
+                storageClass: "longhorn-replica2"
+              redis:
+                storageClass: "longhorn-replica2"
+              trivy:
+                storageClass: "longhorn-replica2"
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: harbor
+  syncPolicy:
+    automated: 
+      prune: true
+    syncOptions:
+     - CreateNamespace=true

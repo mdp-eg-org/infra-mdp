@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+  labels:
+    app: helm
+    type: centralized-app
+    env: prod
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    namespace: vault
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: 'https://github.com/mdp-eg-org/infra-mdp'
+      targetRevision: main
+      ref: values
+    - repoURL: ' https://helm.releases.hashicorp.com'
+      chart: vault
+      targetRevision: 0.31.0
+      helm:
+        valueFiles:
+        - $values/centralized-apps/vault/config

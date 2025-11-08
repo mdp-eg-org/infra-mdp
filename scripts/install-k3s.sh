@@ -14,7 +14,7 @@ workers=(
 USER=root
 kubeconfig="./hetzner-cluster.conf"
 k3s_version="v1.33.5+k3s1"
-extra_args="--disable traefik --cluster-init"
+extra_args="--disable traefik --disable servicelb --cluster-init"
 
 install_first_master() {
     echo "Installing first master: $1"
