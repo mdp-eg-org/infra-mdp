@@ -22,12 +22,12 @@ spec:
                 secretName: "harbor-tls"
               certSource: secret
             ingress:
-              controller: traefik
               hosts:
                 core: "harbor.poc.mdplabs.dev"
               className: traefik-external
               annotations:
                 cert-manager.io/cluster-issuer: acme-issuer
+                ingress.kubernetes.io/ssl-redirect: "false"  # Until add DNS
           
           externalURL: "https://harbor.poc.mdplabs.dev"
           persistence:
