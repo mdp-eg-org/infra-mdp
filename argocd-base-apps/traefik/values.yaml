@@ -7,7 +7,7 @@ providers:
 
 affinity:
   podAntiAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
+    preferredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
           matchLabels:
             app.kubernetes.io/name: traefik
