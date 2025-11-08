@@ -22,7 +22,7 @@ spec:
     - repoURL: 'https://github.com/mdp-eg-org/infra-mdp'
       targetRevision: main
       ref: values
-    - repoURL: ' https://helm.releases.hashicorp.com'
+    - repoURL: 'https://helm.releases.hashicorp.com'
       chart: vault
       targetRevision: 0.31.0
       helm:
