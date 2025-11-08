@@ -1,3 +1,4 @@
 resources:
+- metallb/application.yaml
 - traefik/external-application.yaml
 - traefik/internal-application.yaml
