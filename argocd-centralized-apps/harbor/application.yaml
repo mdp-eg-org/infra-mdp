@@ -28,6 +28,8 @@ spec:
               annotations:
                 cert-manager.io/cluster-issuer: acme-issuer
                 ingress.kubernetes.io/ssl-redirect: "false"  # Until add DNS
+                traefik.ingress.kubernetes.io/router.entrypoints: web
+
           
           externalURL: "https://harbor.poc.mdplabs.dev"
           persistence:
