@@ -27,4 +27,4 @@ spec:
       targetRevision: 0.31.0
       helm:
         valueFiles:
-        - $values/centralized-apps/vault/config
+        - $values/argocd-centralized-apps/vault/config
