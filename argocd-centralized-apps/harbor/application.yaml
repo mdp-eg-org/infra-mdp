@@ -18,11 +18,9 @@ spec:
           expose:
             type: ingress
             tls:
-              enable: false
-            # tls:
-            #   secret:
-            #     secretName: "harbor-tls"
-            #   certSource: secret
+              secret:
+                secretName: "harbor-tls"
+              certSource: secret
             ingress:
               hosts:
                 core: "harbor.poc.mdplabs.dev"
