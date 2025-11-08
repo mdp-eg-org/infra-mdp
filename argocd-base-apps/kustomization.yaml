@@ -1,0 +1,3 @@
+resources:
+- traefik/external-application.yaml
+- traefik/internal-application.yaml

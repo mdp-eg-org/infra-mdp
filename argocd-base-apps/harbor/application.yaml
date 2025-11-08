@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+  labels:
+    app: helm
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.goharbor.io'
+    targetRevision: 1.19.0
+    chart: harbor
+    helm:
+      values: |
+          expose:
+            tls:
+              secret:
+                secretName: "harbor-tls"
+              certSource: secret
+            ingress:
+              controller: kong
+              hosts:
+                core: "harbor.ops.integrant.com"
+              className: kong
+              annotations:
+                cert-manager.io/cluster-issuer: acme-issuer
+          
+          externalURL: "https://harbor.ops.integrant.com"
+          persistence:
+            persistentVolumeClaim:
+              registry:
+                storageClass: "longhorn"
+              jobservice:
+                jobLog:
+                  storageClass: "longhorn"
+              database:
+                storageClass: "longhorn"
+              redis:
+                storageClass: "longhorn"
+              trivy:
+                storageClass: "longhorn"
+
+
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: harbor
+  syncPolicy:
+    automated: 
+      prune: true
+    syncOptions:
+     - CreateNamespace=true

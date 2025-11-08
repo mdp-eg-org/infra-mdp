@@ -1,0 +1,38 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: external-pool
+  namespace: metallb
+spec:
+  addresses:
+  - 157.90.149.78
+  - 167.235.240.112
+  - 91.99.125.137
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-adv-external
+  namespace: metallb
+spec:
+  ipAddressPools:
+  - external-pool
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: internal-pool
+  namespace: metallb
+spec:
+  addresses:
+  - 10.15.10.222
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-adv-internal
+  namespace: metallb
+spec:
+  ipAddressPools:
+  - internal-pool

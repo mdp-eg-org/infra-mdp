@@ -1,0 +1,23 @@
+namespace: argocd
+
+resources:
+  - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# add --enable-helm to kustomize options
+configMapGenerator:
+- name: argocd-cm
+  behavior: merge
+  literals: 
+  - kustomize.buildOptions="--enable-helm" 
+  - timeout.reconciliation=300s
+  - url=https://argo.poc.mdplabs.dev
+
+- name: argocd-cmd-params-cm
+  behavior: merge
+  literals: 
+  - server.insecure="true"
+
+- name: argocd-rbac-cm
+  behavior: merge
+  files: 
+  - policy.csv

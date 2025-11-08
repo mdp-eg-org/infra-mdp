@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik-internal
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:your-org/infra.git'
+    targetRevision: HEAD
+    path: centralized-apps/argocd-apps/traefik-internal
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-internal.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,6 @@
+resources:
+- external-services
+- apps/application-cert-manager-helm.yaml
+- cert-manager/cluster-issuer.yaml
+- apps/application-harbor-helm.yaml
+- apps/application-longhorn.yaml

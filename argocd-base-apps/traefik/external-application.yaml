@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik-external
+  namespace: argocd
+  labels:
+    app: helm
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    namespace: traefik
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://traefik.github.io/charts
+    targetRevision: 37.0.0
+    chart: traefik
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-external.yaml
