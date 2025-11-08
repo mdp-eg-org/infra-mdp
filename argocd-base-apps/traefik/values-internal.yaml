@@ -6,6 +6,9 @@ ingressClass:
 additionalArguments:
   - "--providers.kubernetesingress.ingressclass=traefik-internal"
   - "--ping"
+providers:
+  kubernetesCRD:
+    enabled: false
 
 ports:
   web:
