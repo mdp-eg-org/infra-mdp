@@ -2,6 +2,7 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  - ingress.yaml
 
 # add --enable-helm to kustomize options
 configMapGenerator:
