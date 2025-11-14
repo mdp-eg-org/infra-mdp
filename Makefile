@@ -17,3 +17,6 @@ install-base-app-bootstrap: ## install Argocd base-apps bootstrap application
 
 install-centralized-app-bootstrap: ## install Argocd centralized-apps bootstrap application
 	kubectl apply -f argocd/centralized-apps-bootstrap.yaml -n argocd
+
+get-harbor-password: 
+	kubectl -n harbor get secret harbor-core -o jsonpath="{.data.HARBOR_ADMIN_PASSWORD}" | base64 -d ;echo
