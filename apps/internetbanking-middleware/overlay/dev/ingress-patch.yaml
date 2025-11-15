@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: middleware-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: acme-issuer
+spec:
+  ingressClassName: traefik-external
+  rules:
+    - host: internetbanking-middleware-dev.poc.mdplabs.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: internetbanking-middleware
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - internetbanking-middleware-dev.poc.mdplabs.dev
+      secretName: middleware-tls
+

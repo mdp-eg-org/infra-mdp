@@ -1,0 +1,19 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+  
+patchesStrategicMerge:
+  - ingress-patch.yaml
+  - replica-patch.yaml 
+
+configMapGenerator:
+  - name: sdkss-env
+    files:
+      - sdkss.env
+
+images:
+  - name: placeholder/sdkss-service
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdkss-service
+    newTag: latest

@@ -96,3 +96,10 @@ kubectl exec -ti vault-0 -- vault delete auth/approle/role/admin-role
 kubectl exec -ti vault-0 -- vault read auth/approle/role/admin-role/role-id
 kubectl exec -ti vault-0 -- vault write -f auth/approle/role/admin-role/secret-id
 ```
+
+# Pipeline in github
+## Install github agent in hetzner host
+```
+ssh root@46.224.3.83
+sudo systemctl status actions.runner.mdp-eg-org-internetbanking-middleware.mdp-hetzner-runner.service
+```

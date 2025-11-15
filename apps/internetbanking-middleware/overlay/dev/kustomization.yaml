@@ -1,0 +1,19 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+  - replica-patch.yaml 
+
+configMapGenerator:
+  - name: middleware-env
+    files:
+      - middleware.env
+
+images:
+  - name: placeholder/middleware
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/middleware
+    newTag: latest

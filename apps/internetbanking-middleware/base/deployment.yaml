@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: internetbanking-middleware
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: internetbanking-middleware
+  template:
+    metadata:
+      labels:
+        app: internetbanking-middleware
+    spec:
+      containers:
+        - name: internetbanking-middleware
+          image: placeholder/middleware:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: middleware-env
+            - secretRef:
+                name: middleware-secret
+---

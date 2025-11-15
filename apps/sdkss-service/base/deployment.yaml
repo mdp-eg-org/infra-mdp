@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sdkss-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sdkss-service
+  template:
+    metadata:
+      labels:
+        app: sdkss-service
+    spec:
+      containers:
+        - name: sdkss-service
+          image: placeholder/sdkss-service:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: sdkss-env
+            - secretRef:
+                name: sdkss-secret
+---
