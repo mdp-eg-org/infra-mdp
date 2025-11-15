@@ -1,0 +1,3 @@
+resources:
+- postgres-application.yaml
+- internetbanking-application.yaml

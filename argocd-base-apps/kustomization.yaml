@@ -5,4 +5,3 @@ resources:
 - cert-manager/application.yaml
 - longhorn/application.yaml
 - external-secrets/application.yaml
-- database/postgres-application.yaml

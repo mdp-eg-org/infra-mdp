@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: internetbanking-middleware
+  namespace: argocd
+  labels:
+    env: dev
+spec:
+  syncPolicy:
+    automated: 
+      prune: true
+    syncOptions:
+     - CreateNamespace=true
+  destination:
+    namespace: internetbanking-dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/mdp-eg-org/infra-mdp
+    targetRevision: HEAD
+    path: apps/internetbanking-middleware/overlay/dev
+---
