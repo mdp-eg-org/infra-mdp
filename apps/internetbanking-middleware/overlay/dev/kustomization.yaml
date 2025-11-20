@@ -6,7 +6,6 @@ resources:
 
 patchesStrategicMerge:
   - ingress-patch.yaml
-  - replica-patch.yaml 
 
 configMapGenerator:
   - name: middleware-env
@@ -17,3 +16,7 @@ images:
   - name: placeholder/middleware
     newName: harbor.poc.mdplabs.dev/internetbanking-middleware/middleware
     newTag: dev-100f56f0
+
+replicas:
+  - name: internetbanking-middleware
+    count: 1

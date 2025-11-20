@@ -14,9 +14,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: internetbanking-middleware
+                name: sdkss-service
                 port:
-                  number: 8080
+                  number: 3000
   tls:
     - hosts:
         - sdkss-dev.poc.mdplabs.dev
