@@ -20,6 +20,6 @@ spec:
   tls:
     - hosts:
         - sdkss-dev.poc.mdplabs.dev
-      secretName: middleware-tls
+      secretName: sdkss-tls
 
 
