@@ -26,8 +26,8 @@ spec:
             ingressClassName: traefik-external
             hosts:
               - grafana.poc.mdplabs.dev
-            annotations:
-              cert-manager.io/cluster-issuer: acme-issuer
+            # annotations:
+            #   cert-manager.io/cluster-issuer: acme-issuer
             tls:
               - secretName: grafana-tls
                 hosts:
