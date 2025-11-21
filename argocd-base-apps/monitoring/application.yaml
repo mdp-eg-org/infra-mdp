@@ -29,10 +29,8 @@ spec:
           prometheus:
             monitor:
               enabled: true
-              additionalLabels:
-                cluster: mdp-hetzner
               http:
-                metricRelabelings:
+                relabelings:
                   - targetLabel: cluster
                     replacement: "mdp-hetzner"
                     action: replace
