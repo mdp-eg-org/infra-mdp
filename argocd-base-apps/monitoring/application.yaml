@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  source:
+    chart: kube-prometheus-stack
+    repoURL: oci://ghcr.io/prometheus-community/charts
+    targetRevision: 79.7.1
+    helm:
+      values: |
+        prometheus:
+          prometheusSpec:
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+        grafana:
+          ingress:
+            enabled: true
+            hosts:
+              - grafana.poc.mdplabs.dev
+            annotations:
+              kubernetes.io/ingress.class: traefik-external
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
