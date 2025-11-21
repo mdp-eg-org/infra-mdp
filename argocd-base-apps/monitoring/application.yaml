@@ -25,15 +25,15 @@ spec:
                     requests:
                       storage: 8Gi
 
-        kube-state-metrics:
-          prometheus:
-            monitor:
-              enabled: true
-              http:
-                relabelings:
-                  - targetLabel: cluster
-                    replacement: "mdp-hetzner"
-                    action: replace
+        # kube-state-metrics:
+        #   prometheus:
+        #     monitor:
+        #       enabled: true
+        #       http:
+        #         relabelings:
+        #           - targetLabel: cluster
+        #             replacement: "mdp-hetzner"
+        #             action: replace
 
         grafana:
           ingress:
