@@ -28,7 +28,7 @@ spec:
         kube-state-metrics:
           prometheus:
             monitor:
-              additionalLabels
+              additionalLabels:
                 cluster: mdp-hetzner
 
         grafana:
