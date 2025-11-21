@@ -19,7 +19,10 @@ spec:
             storageSpec:
               volumeClaimTemplate:
                 spec:
-                  storageClassName: longhorn
+                  storageClassName: longhorn-replica2
+                  resources:
+                    requests:
+                      storage: 8Gi
         grafana:
           ingress:
             enabled: true
