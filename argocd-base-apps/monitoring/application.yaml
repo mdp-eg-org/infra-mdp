@@ -27,11 +27,6 @@ spec:
 
         kubelet:
           serviceMonitor:
-            # relabelings:
-            # - sourceLabels: [__address__]
-            #   targetLabel: cluster
-            #   replacement: "mdp-hetzner"
-            #   action: replace
             additionalLabels::
              cluster: mdp-hetzner
 
