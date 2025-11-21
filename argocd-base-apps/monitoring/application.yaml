@@ -25,10 +25,11 @@ spec:
                     requests:
                       storage: 8Gi
 
-        kubeStateMetrics:
-          serviceMonitor:
-            additionalLabels::
-             cluster: mdp-hetzner
+        kube-state-metrics:
+          prometheus:
+            monitor:
+              additionalLabels
+                cluster: mdp-hetzner
 
         grafana:
           ingress:
