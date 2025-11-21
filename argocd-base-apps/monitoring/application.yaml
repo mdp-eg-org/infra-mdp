@@ -28,8 +28,13 @@ spec:
         kube-state-metrics:
           prometheus:
             monitor:
+              enabled: true
               additionalLabels:
                 cluster: mdp-hetzner
+              http:
+                metricRelabelings:
+                  - targetLabel: cluster
+                    replacement: "mdp-hetzner"
 
         grafana:
           ingress:
