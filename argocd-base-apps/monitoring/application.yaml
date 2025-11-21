@@ -15,6 +15,7 @@ spec:
     helm:
       values: |
         prometheus:
+          enabled: true
           prometheusSpec:
             storageSpec:
               volumeClaimTemplate:
