@@ -25,7 +25,7 @@ spec:
                     requests:
                       storage: 8Gi
 
-        kubelet:
+        kubeStateMetrics:
           serviceMonitor:
             additionalLabels::
              cluster: mdp-hetzner
