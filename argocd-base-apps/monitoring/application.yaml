@@ -10,7 +10,7 @@ spec:
     namespace: monitoring
   source:
     chart: kube-prometheus-stack
-    repoURL: oci://ghcr.io/prometheus-community/charts
+    repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 79.7.1
     helm:
       values: |
