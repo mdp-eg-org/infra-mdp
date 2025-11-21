@@ -35,6 +35,7 @@ spec:
                 metricRelabelings:
                   - targetLabel: cluster
                     replacement: "mdp-hetzner"
+                    action: replace
 
         grafana:
           ingress:
