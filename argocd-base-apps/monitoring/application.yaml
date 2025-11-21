@@ -24,6 +24,15 @@ spec:
                   resources:
                     requests:
                       storage: 8Gi
+
+        kubeStateMetrics:
+          serviceMonitor:
+            enabled: true
+            metricRelabelings:
+              - sourceLabels: []
+                targetLabel: cluster
+                replacement: "mdp-hetzner"
+
         grafana:
           ingress:
             enabled: true
