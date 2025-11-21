@@ -23,10 +23,15 @@ spec:
         grafana:
           ingress:
             enabled: true
+            ingressClassName: traefik-external
             hosts:
               - grafana.poc.mdplabs.dev
             annotations:
-              kubernetes.io/ingress.class: traefik-external
+              cert-manager.io/cluster-issuer: acme-issuer
+            tls:
+              - secretName: grafana-tls
+                hosts:
+                  - grafana.poc.mdplabs.dev
   syncPolicy:
     automated:
       prune: true
