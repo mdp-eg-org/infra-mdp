@@ -25,13 +25,12 @@ spec:
                     requests:
                       storage: 8Gi
 
-        kubeStateMetrics:
+        kubelet:
           serviceMonitor:
-            enabled: true
-            metricRelabelings:
-              - sourceLabels: []
-                targetLabel: cluster
-                replacement: "mdp-hetzner"
+            relabelings:
+            - sourceLabels: [__address__]
+              targetLabel: cluster
+              replacement: "mdp-hetzner"
 
         grafana:
           ingress:
