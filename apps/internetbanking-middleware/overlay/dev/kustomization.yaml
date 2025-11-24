@@ -15,7 +15,7 @@ configMapGenerator:
 images:
   - name: placeholder/middleware
     newName: harbor.poc.mdplabs.dev/internetbanking-middleware/middleware
-    newTag: dev-db818e47
+    newTag: dev-55eccbc2
 
 replicas:
   - name: internetbanking-middleware
