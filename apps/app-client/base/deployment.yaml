@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mdpus-client
-          image: placeholder/mdpus-client:latest
+          image: placeholder/app-client:latest
           ports:
             - containerPort: 3000
           envFrom:

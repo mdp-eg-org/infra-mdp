@@ -13,8 +13,8 @@ configMapGenerator:
       - mdpus-client.env
 
 images:
-  - name: placeholder/mdpus-client
-    newName: harbor.poc.mdplabs.dev/mdpus-client/mdpus-client
+  - name: placeholder/app-client
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/app-client
     newTag: dev-560c669c
 
 replicas:
