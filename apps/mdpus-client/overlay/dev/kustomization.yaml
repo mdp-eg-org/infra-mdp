@@ -1,0 +1,23 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+
+configMapGenerator:
+  - name: mdpus-client-env
+    files:
+      - mdpus-client.env
+
+images:
+  - name: placeholder/mdpus-client
+    newName: harbor.poc.mdplabs.dev/mdpus-client/mdpus-client
+    newTag: dev-560c669c
+
+replicas:
+  - name: mdpus-client
+    count: 1
+

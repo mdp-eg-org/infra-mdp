@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdpus-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mdpus-client
+  template:
+    metadata:
+      labels:
+        app: mdpus-client
+    spec:
+      containers:
+        - name: mdpus-client
+          image: placeholder/mdpus-client:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: mdpus-client-env
+            - secretRef:
+                name: mdpus-client-secret
+---

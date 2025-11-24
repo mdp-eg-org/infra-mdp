@@ -20,3 +20,6 @@ install-centralized-app-bootstrap: ## install Argocd centralized-apps bootstrap 
 
 get-harbor-password: 
 	kubectl -n harbor get secret harbor-core -o jsonpath="{.data.HARBOR_ADMIN_PASSWORD}" | base64 -d ;echo
+
+get-grafana-password: 
+	kubectl -n monitoring get secret monitoring-grafana  -o jsonpath="{.data.admin-password}" | base64 -d ;echo
