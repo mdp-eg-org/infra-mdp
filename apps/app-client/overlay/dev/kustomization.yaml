@@ -8,9 +8,9 @@ patchesStrategicMerge:
   - ingress-patch.yaml
 
 configMapGenerator:
-  - name: mdpus-client-env
+  - name: app-client-env
     files:
-      - mdpus-client.env
+      - app-client.env
 
 images:
   - name: placeholder/app-client
@@ -18,6 +18,6 @@ images:
     newTag: dev-afd0609e
 
 replicas:
-  - name: mdpus-client
+  - name: app-client
     count: 1
 
