@@ -2,3 +2,4 @@ resources:
 - postgres-application.yaml
 - internetbanking-application.yaml
 - sdkss-application.yaml
+- app-client-application.yaml
