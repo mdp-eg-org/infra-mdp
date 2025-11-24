@@ -15,7 +15,7 @@ configMapGenerator:
 images:
   - name: placeholder/app-client
     newName: harbor.poc.mdplabs.dev/internetbanking-middleware/app-client
-    newTag: dev-560c669c
+    newTag: dev-afd0609e
 
 replicas:
   - name: mdpus-client
