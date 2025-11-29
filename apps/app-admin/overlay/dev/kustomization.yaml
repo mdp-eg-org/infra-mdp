@@ -1,0 +1,23 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+
+configMapGenerator:
+  - name: app-admin-env
+    files:
+      - app-admin.env
+
+images:
+  - name: placeholder/app-admin
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/app-admin
+    newTag: dev-6fc14caf
+
+replicas:
+  - name: app-admin
+    count: 1
+

@@ -3,3 +3,5 @@ resources:
 - internetbanking-application.yaml
 - sdkss-application.yaml
 - app-client-application.yaml
+- app-admin-application.yaml
+- app-server-application.yaml

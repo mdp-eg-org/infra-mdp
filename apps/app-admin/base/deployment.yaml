@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-admin
+  template:
+    metadata:
+      labels:
+        app: app-admin
+    spec:
+      containers:
+        - name: app-admin
+          image: placeholder/app-admin:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: app-admin-env
+            - secretRef:
+                name: app-admin-secret
+---
