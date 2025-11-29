@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-server-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: acme-issuer
+spec:
+  ingressClassName: traefik-external
+  rules:
+    - host: app-server-pr-PR_NUMBER.poc.mdplabs.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-server
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - app-server-pr-PR_NUMBER.poc.mdplabs.dev
+      secretName: app-server-tls-PR_NUMBER
+

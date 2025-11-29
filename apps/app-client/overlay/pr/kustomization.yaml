@@ -1,0 +1,23 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+
+configMapGenerator:
+  - name: app-client-env
+    files:
+      - app-client.env
+
+images:
+  - name: placeholder/app-client
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/app-client
+    newTag: dev-6fc14caf
+
+replicas:
+  - name: app-client
+    count: 1
+
