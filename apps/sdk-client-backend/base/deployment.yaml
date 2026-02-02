@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sdk-backend
+  name: sdk-client-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sdk-backend
+      app: sdk-client-backend
   template:
     metadata:
       labels:
-        app: sdk-backend
+        app: sdk-client-backend
     spec:
       containers:
-        - name: sdk-backend
-          image: placeholder/sdk-backend:latest
+        - name: sdk-client-backend
+          image: placeholder/sdk-client-backend:latest
           ports:
             - containerPort: 4000
           envFrom:
             - configMapRef:
-                name: sdk-backend-env
+                name: sdk-client-backend-env
             - secretRef:
-                name: sdk-backend-secret
+                name: sdk-client-backend-secret
 ---

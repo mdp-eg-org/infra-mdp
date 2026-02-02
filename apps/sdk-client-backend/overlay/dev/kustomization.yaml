@@ -8,15 +8,15 @@ patchesStrategicMerge:
   - ingress-patch.yaml
 
 configMapGenerator:
-  - name: sdk-backend-env
+  - name: sdk-client-backend-env
     files:
-      - sdk-backend.env
+      - sdk-client-backend.env
 
 images:
-  - name: placeholder/sdk-backend
-    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdk-backend
+  - name: placeholder/sdk-client-backend
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdk-client-backend
     newTag: dev-67cd756b
 
 replicas:
-  - name: sdk-backend
+  - name: sdk-client-backend
     count: 1

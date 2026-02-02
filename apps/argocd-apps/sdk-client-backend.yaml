@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sdk-backend-service
+  name: sdk-client-backend-service
   namespace: argocd
   labels:
     env: dev
@@ -19,5 +19,5 @@ spec:
   source:
     repoURL: https://github.com/mdp-eg-org/infra-mdp
     targetRevision: HEAD
-    path: apps/sdk-backend/overlay/dev
+    path: apps/sdk-client-backend/overlay/dev
 ---
