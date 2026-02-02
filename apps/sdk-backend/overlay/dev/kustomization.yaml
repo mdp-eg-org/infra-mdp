@@ -15,7 +15,7 @@ configMapGenerator:
 images:
   - name: placeholder/sdk-backend
     newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdk-backend
-    newTag: dev-642d0041
+    newTag: dev-67cd756b
 
 replicas:
   - name: sdk-backend
