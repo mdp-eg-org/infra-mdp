@@ -8,9 +8,9 @@ patchesStrategicMerge:
   - ingress-patch.yaml
 
 configMapGenerator:
-  - name: sdkss-env
+  - name: sdk-backend-env
     files:
-      - sdkss.env
+      - sdk-backend.env
 
 images:
   - name: placeholder/sdk-backend
