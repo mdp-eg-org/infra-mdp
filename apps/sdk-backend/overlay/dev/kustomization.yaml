@@ -1,0 +1,22 @@
+namespace: internetbanking-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+  
+patchesStrategicMerge:
+  - ingress-patch.yaml
+
+configMapGenerator:
+  - name: sdkss-env
+    files:
+      - sdkss.env
+
+images:
+  - name: placeholder/sdk-backend
+    newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdk-backend
+    newTag: dev-642d0041
+
+replicas:
+  - name: sdk-backend
+    count: 1

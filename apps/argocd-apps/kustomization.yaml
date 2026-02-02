@@ -5,3 +5,4 @@ resources:
 - app-client-application.yaml
 - app-admin-application.yaml
 - app-server-application.yaml
+- sdk-backend-application.yaml

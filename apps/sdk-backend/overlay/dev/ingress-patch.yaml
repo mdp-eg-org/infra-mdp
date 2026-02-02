@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sdk-backend-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: acme-issuer
+spec:
+  ingressClassName: traefik-external
+  rules:
+    - host: sdk-backend-dev.poc.mdplabs.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sdk-backend
+                port:
+                  number: 4000
+  tls:
+    - hosts:
+        - sdk-backend-dev.poc.mdplabs.dev
+      secretName: sdk-backend-tls
+
+

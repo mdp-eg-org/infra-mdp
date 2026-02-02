@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sdk-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sdk-backend
+  template:
+    metadata:
+      labels:
+        app: sdk-backend
+    spec:
+      containers:
+        - name: sdk-backend
+          image: placeholder/sdk-backend:latest
+          ports:
+            - containerPort: 4000
+          envFrom:
+            - configMapRef:
+                name: sdk-backend-env
+            - secretRef:
+                name: sdk-backend-secret
+---
