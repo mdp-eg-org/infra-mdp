@@ -15,7 +15,7 @@ configMapGenerator:
 images:
   - name: placeholder/sdkss-service
     newName: harbor.poc.mdplabs.dev/internetbanking-middleware/sdkss-service
-    newTag: dev-4874738d
+    newTag: dev-1100edff
 
 replicas:
   - name: sdkss-service
