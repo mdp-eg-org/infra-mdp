@@ -4,8 +4,8 @@ metadata:
   name: mdp-website
   annotations:
     cert-manager.io/cluster-issuer: acme-issuer
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  ingressClassName: traefik-external
   tls:
     - hosts:
         - website.poc.mdplabs.dev

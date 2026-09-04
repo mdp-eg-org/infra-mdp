@@ -5,7 +5,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: acme-issuer
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik-external
   tls:
     - hosts:
         - mdp.global
