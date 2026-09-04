@@ -1,0 +1,22 @@
+namespace: mdp-website-dev
+
+resources:
+  - external-secret.yaml
+  - ../../base
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+
+configMapGenerator:
+  - name: mdp-website-env
+    files:
+      - mdp-website.env
+
+images:
+  - name: placeholder/mdp-website
+    newName: harbor.poc.mdplabs.dev/mdp-website/mdp-global
+    newTag: dev-initial
+
+replicas:
+  - name: mdp-website
+    count: 1

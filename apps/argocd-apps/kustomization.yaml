@@ -6,3 +6,4 @@ resources:
 - app-admin-application.yaml
 - app-server-application.yaml
 - sdk-client-backend-application.yaml
+- mdp-website-application.yaml
