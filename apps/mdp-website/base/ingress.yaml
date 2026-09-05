@@ -21,3 +21,4 @@ spec:
                 name: mdp-website
                 port:
                   number: 80
+                  # service port 80 → container 3000 (see service.yaml)
