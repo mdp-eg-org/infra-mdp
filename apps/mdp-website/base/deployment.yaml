@@ -4,6 +4,10 @@ metadata:
   name: mdp-website
 spec:
   replicas: 1
+  # Media lives on a ReadWriteOnce PVC; Recreate avoids two pods contending
+  # for the volume during a rollout.
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: mdp-website
@@ -12,20 +16,45 @@ spec:
       labels:
         app: mdp-website
     spec:
+      # Matches the non-root uid/gid baked into the image (nextjs 1001);
+      # fsGroup makes the mounted media PVC writable by that user.
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
         - name: mdp-website
           image: placeholder/mdp-website:latest
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: mdp-website-env
             - secretRef:
                 name: mdp-website-secret
+          volumeMounts:
+            - name: media
+              mountPath: /data/media
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            initialDelaySeconds: 45
+            periodSeconds: 20
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "100m"
-            limits:
               memory: "512Mi"
-              cpu: "500m"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: mdp-website-media

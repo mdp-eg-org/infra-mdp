@@ -2,91 +2,85 @@
 
 ## Architecture
 
-- **Application**: PHP 8.2 with Apache (mdp-website container)
-- **Database**: PostgreSQL (existing cluster database)
-- **Secrets**: Managed via Vault + External Secrets Operator
+- **Application**: Next.js 16 + Payload 3 (Node 22, `next start` on port 3000).
+  Source lives in `site/` of `mdp-eg-org/mdp-website`; the image is built by that
+  repo's `.github/workflows/cluster-deploy.yml` on push to `develop`.
+- **Database**: PostgreSQL (shared cluster DB `postgres.default.svc.cluster.local:5432`).
+  Payload connects via a single `DATABASE_URL`.
+- **Media**: Payload stores uploads on local disk (`MEDIA_DIR=/data/media`), backed by
+  the `mdp-website-media` PVC (there is no S3/cloud-storage adapter).
+- **Secrets**: Vault + External Secrets Operator (`dev/mdp-website`).
 
 ## Directory Structure
 
 ```
 mdp-website/
 ├── base/
-│   ├── deployment.yaml          # App deployment
-│   ├── service.yaml             # App service
-│   ├── ingress.yaml             # Base ingress config
+│   ├── deployment.yaml   # Node server, port 3000, media PVC mount, probes
+│   ├── service.yaml      # port 80 -> targetPort 3000
+│   ├── ingress.yaml      # base ingress
+│   ├── pvc.yaml          # mdp-website-media (RWO, longhorn-replica2)
 │   └── kustomization.yaml
 └── overlay/
     └── dev/
-        ├── kustomization.yaml
-        ├── external-secret.yaml
-        ├── mdp-website.env      # Non-sensitive config
-        └── ingress-patch.yaml
+        ├── kustomization.yaml   # image, namespace mdp-website-dev
+        ├── external-secret.yaml # pulls dev/mdp-website from Vault
+        ├── mdp-website.env      # non-sensitive config (see below)
+        └── ingress-patch.yaml   # host website.poc.mdplabs.dev
 ```
 
-## Vault Secret Configuration
+## Vault Secret Configuration (`dev/mdp-website`)
 
-### Dev Environment
-Path: `dev/mdp-website`
+Required keys (each becomes an env var via `envFrom` on the secret):
 
-Required keys:
 ```json
 {
-  "DB_NAME": "mdp_website",
-  "DB_USER": "mdp_website_user",
-  "DB_PASS": "your-secure-password"
+  "DATABASE_URL": "postgresql://mdp_website_user:<password>@postgres.default.svc.cluster.local:5432/mdp_website",
+  "PAYLOAD_SECRET": "<random-64-char-string>",
+  "PREVIEW_SECRET": "<random-string>"
 }
 ```
 
-## Environment Variables
+Optional (contact-form email; unset = email disabled, submissions still persist):
+`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_NOTIFY_TO`.
 
-### From ConfigMap (non-sensitive):
-- `DB_HOST` - PostgreSQL service name (default: `postgres.default.svc.cluster.local`)
-- `DB_PORT` - PostgreSQL port (default: `5432`)
-- `BASE_URL` - Application base URL
+> The previous PHP `DB_HOST/DB_PORT/DB_NAME/DB_USER/DB_PASS` keys are not used by
+> the Payload app and can be removed once the PHP site is retired.
 
-### From Vault (sensitive):
-- `DB_NAME` - Database name
-- `DB_USER` - Database username
-- `DB_PASS` - Database password
+## Non-sensitive Config (ConfigMap from `mdp-website.env`)
 
-## Deployment
-
-The deployment is automated via GitHub Actions:
-
-1. Push to `develop` branch triggers dev deployment
-2. Manual trigger via workflow_dispatch also available
-3. Pipeline builds Docker image and updates Kustomize overlay
-4. ArgoCD syncs the changes to the cluster
+- `NODE_ENV=production`
+- `NEXT_PUBLIC_SERVER_URL` / `REVALIDATE_URL` = `https://website.poc.mdplabs.dev`
+- `MEDIA_DIR=/data/media`
+- `PAYLOAD_DB_PUSH=true` — POC has no committed migrations; Payload pushes the
+  schema on boot. Remove once migrations are introduced (see below).
 
 ## Database Initialization
 
-On first deployment, you need to:
+Create the database/user once on the shared PostgreSQL instance:
 
-1. Create the database in the existing PostgreSQL cluster:
 ```bash
-# Connect to PostgreSQL pod
 kubectl exec -it -n default deployment/postgres -- psql -U postgres
-
-# Create database and user
 CREATE DATABASE mdp_website;
-CREATE USER mdp_website_user WITH ENCRYPTED PASSWORD 'your-password';
+CREATE USER mdp_website_user WITH ENCRYPTED PASSWORD '<password>';
 GRANT ALL PRIVILEGES ON DATABASE mdp_website TO mdp_website_user;
 \q
 ```
 
-2. Import the database schema (convert MySQL schema to PostgreSQL if needed)
-3. Seed initial data
+With `PAYLOAD_DB_PUSH=true`, Payload creates the tables on first boot. Content and
+media still need seeding so the site isn't empty (an empty media set can 500
+media-dependent pages).
 
-## Accessing the Application
+**Before production:** generate Payload migrations (`pnpm payload migrate:create`),
+run `pnpm payload migrate` on deploy, and drop `PAYLOAD_DB_PUSH`.
+
+## Deployment
+
+1. Push to `develop` in the app repo triggers the dev build.
+2. The pipeline builds/pushes the image to `harbor.poc.mdplabs.dev/mdp-website/website`
+   and bumps `newTag` in `overlay/dev/kustomization.yaml`.
+3. ArgoCD (`mdp-website` app, namespace `mdp-website-dev`) syncs the change.
+
+## Access
 
 - **Dev**: https://website.poc.mdplabs.dev
-
-## Scaling
-
-Replicas are configured in overlay kustomization.yaml:
-- Dev: 1 replica
-
-## Monitoring
-
-Resource requests/limits:
-- **App**: 256Mi-512Mi memory, 100m-500m CPU
