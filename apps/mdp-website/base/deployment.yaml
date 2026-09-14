@@ -22,6 +22,29 @@ spec:
         runAsUser: 1001
         runAsGroup: 1001
         fsGroup: 1001
+      # Apply committed Payload migrations to the real database BEFORE the app
+      # starts. `payload migrate` is idempotent (it records applied migrations
+      # in the payload_migrations table and skips them next time), so this is a
+      # no-op on unchanged deploys and applies only new migrations otherwise.
+      # If it fails, the app container never starts — we never serve against an
+      # un-migrated schema. Uses the same image + env as the app container; the
+      # kustomize images: transformer rewrites `placeholder/mdp-website` here too.
+      initContainers:
+        - name: migrate
+          image: placeholder/mdp-website:latest
+          command: ["pnpm", "payload", "migrate"]
+          envFrom:
+            - configMapRef:
+                name: mdp-website-env
+            - secretRef:
+                name: mdp-website-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
       containers:
         - name: mdp-website
           image: placeholder/mdp-website:latest
