@@ -1,0 +1,35 @@
+configuration:
+  cluster:
+    # Set your cluster name to report to SentinelOne console
+    name: "poc-cluster"
+
+# Use Harbor registry images
+image:
+  repository: harbor.poc.mdplabs.dev/sentinelone/s1agent
+  tag: 26.2.1-x86_64
+  pullPolicy: IfNotPresent
+
+helper:
+  image:
+    repository: harbor.poc.mdplabs.dev/sentinelone/s1helper
+    tag: 26.2.1-x86_64
+
+secrets:
+  # Image pull secret name (will be created by external-secret)
+  imagePullSecret: sentinelone-docker-secret
+
+  # Site key (will be populated by external-secret)
+  site_key:
+    valueFrom:
+      secretKeyRef:
+        name: sentinelone-secret
+        key: SITE_KEY
+
+# Additional configurations
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

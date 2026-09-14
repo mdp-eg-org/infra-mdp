@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sentinelone
+  namespace: argocd
+  labels:
+    app: helm
+    type: centralized-app
+    env: prod
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    namespace: sentinelone
+    server: https://kubernetes.default.svc
+  sources:
+    - repoURL: 'https://github.com/mdp-eg-org/infra-mdp'
+      targetRevision: main
+      ref: values
+    - repoURL: 'https://github.com/mdp-eg-org/infra-mdp'
+      targetRevision: main
+      path: argocd-centralized-apps/sentinelone
+    - repoURL: 'https://sentinel-one.github.io/helm-charts/'
+      chart: s1-agent
+      targetRevision: 26.2.1
+      helm:
+        valueFiles:
+          - $values/argocd-centralized-apps/sentinelone/values.yaml
