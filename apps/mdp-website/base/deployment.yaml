@@ -4,6 +4,7 @@ metadata:
   name: mdp-website
 spec:
   replicas: 1
+  revisionHistoryLimit: 2
   # Media lives on a ReadWriteOnce PVC; Recreate avoids two pods contending
   # for the volume during a rollout.
   strategy:
