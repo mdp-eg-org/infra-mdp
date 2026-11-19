@@ -15,7 +15,7 @@ configMapGenerator:
 images:
   - name: placeholder/mdp-website
     newName: harbor.poc.mdplabs.dev/mdp-website/website
-    newTag: dev-2ade3cba
+    newTag: dev-3371bb62
 
 replicas:
   - name: mdp-website
