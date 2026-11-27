@@ -18,6 +18,8 @@ spec:
         prometheus:
           enabled: true
           prometheusSpec:
+            retention: 4d
+            retentionSize: 6GB
             storageSpec:
               volumeClaimTemplate:
                 spec:
