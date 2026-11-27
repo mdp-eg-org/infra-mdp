@@ -1,6 +1,6 @@
 resources:
 # - postgres-application.yaml
-- internetbanking-application.yaml
+# - internetbanking-application.yaml
 - sdkss-application.yaml
 # - app-client-application.yaml
 # - app-admin-application.yaml
