@@ -1,4 +1,4 @@
 resources:
 - vault/application.yaml
 - harbor/application.yaml
-- sentinelone/application.yaml
+# - sentinelone/application.yaml
