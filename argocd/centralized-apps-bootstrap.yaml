@@ -7,6 +7,7 @@ metadata:
     type: bootstrap
     env: prod
 spec:
+  revisionHistoryLimit: 1
   syncPolicy:
     automated:
       selfHeal: true

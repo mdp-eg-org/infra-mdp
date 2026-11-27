@@ -8,6 +8,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  revisionHistoryLimit: 1
   syncPolicy:
     automated: 
       prune: true

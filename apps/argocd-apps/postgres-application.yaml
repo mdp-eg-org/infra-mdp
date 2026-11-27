@@ -4,6 +4,7 @@ metadata:
   name: postgres
   namespace: argocd
 spec:
+  revisionHistoryLimit: 1
   syncPolicy:
     automated: 
       prune: true

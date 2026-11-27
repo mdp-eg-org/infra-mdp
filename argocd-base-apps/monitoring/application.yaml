@@ -4,6 +4,7 @@ metadata:
   name: monitoring
   namespace: argocd
 spec:
+  revisionHistoryLimit: 1
   project: default
   destination:
     server: https://kubernetes.default.svc

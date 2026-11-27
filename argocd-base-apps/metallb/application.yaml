@@ -8,6 +8,7 @@ metadata:
     type: base-app
     env: prod
 spec:
+  revisionHistoryLimit: 1
   project: default
   syncPolicy:
     automated:
@@ -29,6 +30,7 @@ metadata:
   name: metallb-ip-pool
   namespace: argocd
 spec:
+  revisionHistoryLimit: 1
   project: default
   syncPolicy:
     automated:

@@ -6,6 +6,7 @@ metadata:
   labels:
     env: dev
 spec:
+  revisionHistoryLimit: 1
   syncPolicy:
     automated: 
       prune: true

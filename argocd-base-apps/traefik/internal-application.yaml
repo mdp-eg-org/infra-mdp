@@ -8,6 +8,7 @@ metadata:
     type: base-app
     env: prod
 spec:
+  revisionHistoryLimit: 1
   project: default
   syncPolicy:
     automated:

@@ -8,6 +8,7 @@ metadata:
     type: centralized-app
     env: prod
 spec:
+  revisionHistoryLimit: 1
   project: default
   source:
     repoURL: 'https://helm.goharbor.io'

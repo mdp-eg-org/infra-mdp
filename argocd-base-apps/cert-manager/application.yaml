@@ -10,6 +10,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  revisionHistoryLimit: 1
   project: default
   source:
     repoURL: 'https://charts.jetstack.io'
@@ -42,6 +43,7 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  revisionHistoryLimit: 1
   project: default
   source:
     repoURL: https://github.com/mdp-eg-org/infra-mdp
