@@ -34,6 +34,7 @@ spec:
             persistentVolumeClaim:
               registry:
                 storageClass: "longhorn-replica2"
+                size: 20Gi
               jobservice:
                 jobLog:
                   storageClass: "longhorn-replica2"
